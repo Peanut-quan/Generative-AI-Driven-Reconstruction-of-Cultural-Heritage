@@ -1,0 +1,84 @@
+# MLLM-Based Historical Plausibility Review Prompt
+
+This file provides the MLLM-based historical plausibility review prompt and representative review output used in the knowledge-informed review stage of the workflow.
+
+The multi-view generation prompts and photorealistic translation prompts are reported in the main text of the paper. To avoid unnecessary duplication, this repository focuses on the MLLM-based historical plausibility review prompt and example review outputs used in the iterative correction stage.
+
+The review prompt asks the MLLM to act as a domain reviewer and compare the generated image with the original historical reference, the structural reference, and retrieved knowledge-base entries. The output includes a PASS/FAIL screening result, defect analysis, and refinement instructions for the next generation round.
+
+The PASS/FAIL result is used as an operational screening signal for iterative generation and should not be interpreted as a certification of historical authenticity.
+
+---
+
+## 1. Role Definition
+
+You are a senior art historian and computer vision reviewer specializing in Song Dynasty architecture and the painting *Along the River During the Qingming Festival*.
+
+Your task is to evaluate whether the generated image is historically plausible and visually consistent with the provided reference images and retrieved knowledge-base entries.
+
+---
+
+## 2. Input Data
+
+- **Image A:** Original historical painting fragment.
+- **Image B:** Multi-view structural reference.
+- **Image C:** Generated photorealistic image.
+- **Retrieved Knowledge:** Relevant architectural and historical rules retrieved from the external knowledge base.
+
+---
+
+## 3. Review Criteria
+
+Evaluate Image C with reference to the following criteria:
+
+1. Spatial layout
+2. Roof type
+3. Building material
+4. Street layout
+5. Ground condition
+6. Vegetation
+7. Historical objects
+8. Absence of modern objects
+9. Consistency with retrieved knowledge-base entries
+
+---
+
+## 4. Output Format
+
+Return the result in JSON format:
+
+```json
+{
+  "Judgment": "PASS or FAIL",
+  "Defect Analysis": [
+    "Describe specific mismatch 1",
+    "Describe specific mismatch 2"
+  ],
+  "Refinement Instruction": "Provide a revised prompt for the next generation."
+}
+```
+
+---
+
+## 5. Example Review Output
+
+```json
+{
+  "Scene ID": "scene_01",
+  "Judgment": "FAIL",
+  "Defect Analysis": [
+    "The generated roof tiles appear too new and regular compared with the intended weathered grey clay tiles.",
+    "The street surface lacks visible wheel ruts and compacted dirt texture.",
+    "Some decorative elements appear visually closer to later-period architecture and are not clearly supported by the reference image."
+  ],
+  "Refinement Instruction": "Revise the scene by using weathered grey clay tiles, a compacted dirt road with visible wheel ruts, and simpler Northern Song vernacular wooden structures. Avoid modern materials, glossy surfaces, and unsupported decorative elements."
+}
+```
+
+---
+
+## 6. Note
+
+The PASS/FAIL judgment is used as an operational screening signal for iterative generation. It should not be interpreted as a certification of historical authenticity.
+
+Due to the stochastic nature of generative AI models and possible changes in third-party model versions, reproduced review outputs may not be identical to the examples provided here. However, this prompt documents the review logic, output format, and refinement mechanism used in the workflow.
