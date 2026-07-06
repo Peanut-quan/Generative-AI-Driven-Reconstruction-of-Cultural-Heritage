@@ -1,0 +1,97 @@
+# Knowledge Base
+
+This folder documents the manually curated external knowledge base used in the MLLM-based historical plausibility review stage.
+
+In this study, historical and architectural knowledge was manually collected, summarized, and organized by the researchers from academic literature, museum sources, historical painting studies, and architectural references. These curated knowledge entries were then provided to the MLLM as reference materials during the review process.
+
+This repository does not claim to provide a fully automated RAG pipeline or a complete historical database. Instead, it provides representative knowledge sources, structured knowledge-entry examples, and the knowledge selection protocol used to support the knowledge-informed review.
+
+Due to copyright and licensing restrictions, this repository does not redistribute full-text academic publications, books, or high-resolution museum images. The released materials are intended to improve procedural transparency and reproducibility by showing how external knowledge was organized and used in the review process.
+
+# Knowledge Sources
+
+The manually curated knowledge base was constructed from online and offline sources related to Song Dynasty architecture, urban life, historical painting analysis, and *Along the River During the Qingming Festival*.
+
+## Online Sources
+
+1. China National Knowledge Infrastructure (CNKI)  
+   https://www.cnki.net
+
+2. Web of Science  
+   https://www.webofscience.com
+
+3. Google Scholar  
+   https://scholar.google.com
+
+4. Baidu Encyclopedia  
+   https://baike.baidu.com
+
+5. Official museum webpage for *Along the River During the Qingming Festival*  
+   https://www.dpm.org.cn/collection/paint/228226.html
+
+## Offline Sources
+
+The offline sources include academic monographs, historical painting studies, and architectural references concerning *Along the River During the Qingming Festival* and Song Dynasty architecture, including:
+
+1. *Qingming Riverside Scene: Memories of the Prosperous Northern Song Dynasty*
+
+2. The original painting *Along the River During the Qingming Festival* by Zhang Zeduan of the Song Dynasty
+
+3. *Yingzao Fashi* (*Treatise on Architectural Methods*), the official Song architectural codex
+
+# Knowledge Selection Protocol
+
+This file documents how external knowledge entries were manually selected and provided to the MLLM reviewer.
+
+## Selection Method
+
+The study did not use a fully automated vector-based RAG pipeline. Instead, the researchers manually curated and selected relevant knowledge entries from the external knowledge base according to the visual content of each scene and the review task.
+
+For each generated scene, the researchers selected knowledge entries that were relevant to the following review dimensions:
+
+1. Spatial layout
+2. Roof type
+3. Building material
+4. Street layout
+5. Ground condition
+6. Vegetation
+7. Historical objects
+8. Modern object exclusion
+9. Consistency with the original painting fragment and structural reference
+
+## Knowledge Injection Procedure
+
+For each MLLM review round, the selected knowledge entries were inserted into the review prompt as reference information. The MLLM was then asked to compare:
+
+- the original historical painting fragment;
+- the multi-view structural reference;
+- the generated photorealistic image;
+- the manually selected knowledge entries.
+
+The MLLM output included:
+
+- `Judgment`: PASS or FAIL;
+- `Defect Analysis`: identified mismatches or historically implausible details;
+- `Refinement Instruction`: suggested correction prompt for the next generation round.
+
+## Example Selection Logic
+
+If a generated scene contained street-front shops and wooden buildings, the researchers selected knowledge entries related to:
+
+- Northern Song vernacular wooden buildings;
+- weathered timber and grey clay roof tiles;
+- street-front commercial layout;
+- compacted dirt road and wheel ruts;
+- modern object exclusion.
+
+If a generated scene contained riverbank vegetation, the researchers additionally selected entries related to:
+
+- ancient willow trees;
+- riverside vegetation;
+- natural riverbank forms.
+
+## Reproducibility Note
+
+Because knowledge entries were manually selected according to scene content, the process contains researcher judgment. The repository therefore provides representative entries and selection rules to document the procedure, rather than claiming full automation or deterministic retrieval.
+
+The released materials support procedural transparency and allow readers to understand how historical and architectural knowledge was organized and used in the MLLM-based review stage.
